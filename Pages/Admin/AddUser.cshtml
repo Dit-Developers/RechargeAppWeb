@@ -1,0 +1,106 @@
+﻿@page
+@model RechargeAppWeb.Pages.Admin.AddUserModel
+@{
+}
+<style>
+    body {
+        background-color: #111111;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #1a1a1a;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #2A2A2A;
+        border-radius: 5px;
+        background: #2A2A2A;
+        color: #ffffff;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+
+    .alert {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .alert-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .alert-danger {
+        background: #ff4d4d;
+        color: white;
+    }
+</style>
+<a class="btn btn-success btn-block" asp-page="/Admin/Index">Back <- </a>
+<h2 class="text-center">Add User</h2>
+
+<form method="post" class="form-container">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required />
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" id="role" name="role" required>
+            @foreach (var role in Model.Roles)
+            {
+                <option value="@role">@role</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" name="status" required>
+            @foreach (var status in Model.Statuses)
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert @(Model.Message.Contains("successfully") ? "alert-success" : "alert-danger")">
+            @Model.Message
+        </div>
+    }
+    <button type="submit" class="btn btn-primary btn-block">Add User</button>
+
+    <button type="submit" class="btn btn-primary btn-block" asp-page="/Dashboard">Check Users</button>
+</form>

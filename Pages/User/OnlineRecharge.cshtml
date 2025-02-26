@@ -1,0 +1,50 @@
+﻿@page
+@model RechargeAppWeb.Pages.User.OnlineRechargeModel
+@{
+    ViewData["Title"] = "Online Recharge";
+}
+
+<div class="container mt-4">
+    <a class="btn btn-success btn-block" asp-page="/User/Index">Back <-</a>
+
+    <h2 class="text-center">Online Recharge</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-success">@Model.Message</div>
+    }
+
+    <form method="post" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label class="form-label text-dark fw-bold">Mobile Number:</label>
+            <input type="text" class="form-control" asp-for="MobileNumber" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-dark fw-bold">Select Plan:</label>
+            <select class="form-select" asp-for="PlanID" required>
+                @foreach (var plan in Model.RechargePlans)
+                {
+                    <option value="@plan.PlanID">
+                        @plan.Description - $@plan.Amount (@plan.Validity days)
+                    </option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Proceed</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message) && Model.PlanID > 0)
+    {
+        var selectedPlan = Model.RechargePlans.FirstOrDefault(p => p.PlanID == Model.PlanID);
+        if (selectedPlan != null)
+        {
+            <div class="text-center mt-3">
+                <a asp-page="/User/PrintSlip" asp-route-mobile="@Model.MobileNumber" asp-route-plan="@Model.PlanID" class="btn btn-success">
+                    Generate Mini Slip
+                </a>
+            </div>
+        }
+    }
+</div>

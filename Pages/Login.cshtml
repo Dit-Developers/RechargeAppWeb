@@ -1,0 +1,126 @@
+﻿@page
+@model RechargeAppWeb.Pages.LoginModel
+@{
+}
+<style>
+    body {
+        background-color: #111111;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+
+    .login-form {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #1a1a1a;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #2A2A2A;
+        border-radius: 5px;
+        background: #2A2A2A;
+        color: #ffffff;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    label {
+        font-weight: bold;
+        color: #ccc;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+    .alert-danger {
+        background: #ff4d4d;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+        display: block;
+    }
+
+        .password-wrapper input {
+            width: 100%;
+            display: block;
+        }
+
+    .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #aaa;
+    }
+
+        .toggle-password:hover {
+            color: #ffffff;
+        }
+
+</style>
+
+<h2 class="text-center">Login</h2>
+
+<form method="post" class="login-form">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+            <input type="password" class="form-control" id="password" name="password" required />
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    }
+</script>

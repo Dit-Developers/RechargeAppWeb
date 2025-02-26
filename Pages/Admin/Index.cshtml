@@ -1,0 +1,195 @@
+﻿@page
+@model RechargeAppWeb.Pages.Admin.IndexModel
+@{
+    Layout = null;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+    body {
+        background-color: #111111;
+        color: #fff;
+    }
+
+    .navbar {
+        background-color: #000000;
+    }
+
+    .sidebar {
+        background-color: #1a1a1a;
+        height: 100vh;
+        padding-top: 20px;
+    }
+
+        .sidebar a {
+            color: #fff;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+            .sidebar a:hover {
+                background-color: #ff5722;
+                border-radius: 5px;
+            }
+
+    .mini-card {
+        background-color: #1a1a1a;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        border: solid;
+        border-color: #2a2a2a;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #2a2a2a;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <form method="post" asp-page-handler="Logout" class="d-inline">
+                            <button type="submit" class="nav-link btn btn-danger bg-danger text-white border-0">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 sidebar d-flex flex-column">
+                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a asp-page="/Admin/AddUser"><i class="fas fa-users"></i>AddUsers</a>
+                <a asp-page="/Admin/EditUser"><i class="fas fa-exchange-alt"></i> Edit User</a>
+                <a asp-page="/Admin/PostpaidPayments"><i class="fas fa-wallet"></i> Payments</a>
+                <a asp-page="/Admin/MyAccount"><i class="fas fa-cogs"></i> MyAccount</a>
+            </nav>
+            <main class="col-md-10 p-4">
+                <h2 class="text-center">Welcome, @Model.Username</h2>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        <div class="mini-card">
+                            <i class="fas fa-wallet fa-2x"></i>
+                            <h4>$@Model.TotalBalance</h4>
+                            <p>Total Balance</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mini-card">
+                            <i class="fas fa-exchange-alt fa-2x"></i>
+                            <h4>@Model.TotalTransactions</h4>
+                            <p>Transactions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mini-card">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                            <h4>@Model.SuccessfulRecharges</h4>
+                            <p>Successful Recharges</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mini-card">
+                            <i class="fas fa-times-circle fa-2x"></i>
+                            <h4>@Model.FailedTransactions</h4>
+                            <p>Failed Transactions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h4>Registered Users</h4>
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Action (A/In)</th>
+                                <th>Action (Del) </th>
+                                <th>Action (Edit) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr>
+                                    <td>@user.UserID</td>
+                                    <td>@user.Username</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Role</td>
+                                    <td>
+                                        @if (user.Role != "Admin") // Prevent toggling admin status
+                                        {
+                                            <span class="fw-bold @(user.Status == "Active" ? "text-success" : "text-danger")">
+                                                @user.Status
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fw-bold text-primary">@user.Status</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user.Role != "Admin")
+                                        {
+                                            <form method="post">
+                                                <input type="hidden" name="userId" value="@user.UserID" />
+                                                <button type="submit" asp-page-handler="ToggleStatus" class="btn btn-sm @(user.Status == "Active" ? "btn-danger" : "btn-success")">
+                                                    @(user.Status == "Active" ? "Deactivate" : "Activate")
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user.Role != "Admin")
+                                        {
+                                            <a asp-page="/Admin/Delete" asp-route-userId="@user.UserID" class="btn btn-sm btn-danger">
+                                                Delete
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user.Role != "Admin")
+                                        {
+                                            <a asp-page="/Admin/EditUser" asp-route-userId="@user.UserID" class="btn btn-sm btn-primary">
+                                                Edit User
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>

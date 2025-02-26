@@ -1,0 +1,560 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #111111;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://static.vecteezy.com/system/resources/thumbnails/016/412/989/small_2x/abstract-red-background-with-light-blue-gradient-lines-comic-design-vector.jpg') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        /* General Sections */
+        .features, .faq, .partners, .news, .blog, .contact {
+            padding: 50px 20px;
+        }
+
+        /* Cards */
+        .card, .feature-card, .news-card, .blog-card {
+            background: #1a1a1a;
+            border: 2px solid #2A2A2A;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card:hover, .feature-card:hover, .news-card:hover, .blog-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
+            }
+
+            .card img, .news-img, .blog-img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+        /* About Section */
+        .about {
+            background: #ffffff;
+            color: #000000;
+            padding: 80px 20px;
+            margin-bottom: 50px;
+            border-radius: 30px;
+        }
+
+            .about h2 {
+                font-size: 2em;
+                font-weight: bold;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+                color: #000;
+            }
+
+            .about p {
+                font-size: 1rem;
+                line-height: 1.6;
+                text-align: justify;
+                color: #000;
+            }
+
+        .about-img {
+            max-width: 70%;
+            border-radius: 30px;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: #1a1a1a;
+            padding: 50px 20px;
+            border-radius: 10px;
+        }
+
+            .faq .accordion-item {
+                border: none;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .faq .accordion-button {
+                background: #ffffff;
+                color: #000000;
+                font-weight: bold;
+                border-radius: 5px;
+            }
+
+                .faq .accordion-button:not(.collapsed) {
+                    background: #e0e0e0;
+                }
+
+            .faq .accordion-body {
+                background: #2A2A2A;
+                padding: 15px;
+                font-size: 1rem;
+                color: #ffffff;
+                text-align: justify;
+            }
+
+        /* Features Section */
+        .features {
+            padding: 50px 20px;
+        }
+
+        .feature-card {
+            background: #1a1a1a;
+            border: 3px solid #2A2A2A;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 300px;
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 50px 20px;
+            background: #1a1a1a;
+        }
+
+        .partner-logo {
+            width: 100%;
+            max-width: 150px;
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+            .partner-logo:hover {
+                transform: scale(1.1);
+            }
+
+        /* News Section */
+        .news {
+            padding: 50px 20px;
+            background: #1a1a1a;
+        }
+
+            .news h4, .blog h4 {
+                font-size: 1.3rem;
+                margin: 15px 0;
+                color: #ffffff;
+            }
+
+            .news p, .blog p {
+                font-size: 1rem;
+                color: #bbb;
+            }
+
+        /* Blog Section */
+        .blog {
+            padding: 60px 20px;
+            background: #1a1a1a;
+        }
+
+        /* Contact Form */
+        .contact {
+            padding: 60px 20px;
+            background: #1a1a1a;
+        }
+
+        .contact-form {
+            background: #2A2A2A;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+
+            .contact-form .form-group {
+                text-align: left;
+                margin-bottom: 20px;
+            }
+
+                .contact-form .form-group label {
+                    font-weight: bold;
+                    color: #ffffff;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+
+                .contact-form .form-group i {
+                    color: #ffffff;
+                    margin-right: 5px;
+                }
+
+            .contact-form .form-control {
+                width: 100%;
+                padding: 10px;
+                font-size: 1rem;
+                background: #1a1a1a;
+                color: white;
+                border: 1px solid #2A2A2A;
+                border-radius: 5px;
+                transition: border-color 0.3s ease;
+            }
+
+                .contact-form .form-control:focus {
+                    border-color: #ffffff;
+                    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+                    outline: none;
+                }
+
+            .contact-form button {
+                width: 100%;
+                padding: 12px;
+                font-size: 1.2rem;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                background: #ffffff;
+                color: #000;
+                transition: background 0.3s ease, transform 0.2s ease;
+            }
+
+                .contact-form button:hover {
+                    background: #e0e0e0;
+                    transform: scale(1.05);
+                }
+
+        /* Utility Styles */
+        .text-center {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 5px;
+            color: #000000;
+        }
+
+            .btn-primary:hover {
+                background: #e0e0e0;
+            }
+
+        /* Feature Icon */
+        .feature-icon {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="fw-bold">Fast & Secure Mobile Recharge</h1>
+            <p class="lead">Recharge your mobile with just a few clicks. Safe, secure, and instant.</p>
+            <a class="btn btn-light" asp-page="/Login">Get Started</a>
+            <a href="#contact" class="btn btn-outline-light">Contact Us</a>
+        </div>
+    </section>
+
+
+    <!-- Services Section -->
+    <section class="container my-5">
+        <h2 class="text-center">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4"><div class="card"><img src="https://sslcommerz.com/wp-content/uploads/2024/04/mobile-trends-in-Bangladesh.png" class="card-img-top"><div class="card-body"><h5>Prepaid Recharge</h5></div></div></div>
+            <div class="col-md-4"><div class="card"><img src="https://sslcommerz.com/wp-content/uploads/2024/04/The-future-of-mobile-payment-technology-in-bangladesh.png" class="card-img-top"><div class="card-body"><h5>Postpaid Bill Payment</h5></div></div></div>
+            <div class="col-md-4"><div class="card"><img src="https://media.licdn.com/dms/image/v2/D4D12AQGWVQsq3gAJjw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1701806726189?e=2147483647&v=beta&t=Cr4Scy0jbWvWw5wCd3GH2GRapRAQJxqCOCyNs3xcxW8" class="card-img-top"><div class="card-body"><h5>Special Offers</h5></div></div></div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-content">
+                    <h2>About MobileRechargeApp</h2>
+                    <p>We offer quick and secure mobile recharges with the highest level of security and reliability.</p>
+                    <p>At MobileRechargeApp, we strive to provide a seamless and hassle-free experience for all your recharge needs. Whether you need to top-up your prepaid mobile, pay postpaid bills, or activate new services, we’ve got you covered.</p>
+                    <p>With our user-friendly interface and fast transaction processing, you can recharge your mobile in just a few clicks. Our platform supports multiple payment methods, ensuring convenience and flexibility for our users.</p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://img.freepik.com/free-vector/eco-battery-abstract-concept-illustration_335657-1887.jpg" alt="Mobile Recharge" class="about-img img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features text-center">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <div class="row my-5">
+                <div class="col-md-4 my-5">
+                    <div class="feature-card">
+                        <i class="fas fa-bolt feature-icon"></i>
+                        <h4>Fast Recharge</h4>
+                        <p>Enjoy instant mobile recharge with our seamless process. No waiting, just fast and efficient service.</p>
+                        <p>We support all major telecom operators, making your experience hassle-free.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 my-5">
+                    <div class="feature-card">
+                        <i class="fas fa-lock feature-icon"></i>
+                        <h4>Secure Transactions</h4>
+                        <p>Our platform ensures top-notch security with advanced encryption and fraud prevention measures.</p>
+                        <p>Your payments are safe, and your data remains confidential.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 my-5">
+                    <div class="feature-card">
+                        <i class="fas fa-headset feature-icon"></i>
+                        <h4>24/7 Support</h4>
+                        <p>Our customer support team is available round the clock to assist you with any issues or queries.</p>
+                        <p>We’re here to help you anytime, anywhere, ensuring a smooth experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                            How do I recharge my mobile?
+                        </button>
+                    </h2>
+                    <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Select your mobile operator, enter your number, choose a plan, and proceed with payment.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                            What payment methods do you accept?
+                        </button>
+                    </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We accept credit/debit cards, mobile wallets, and online banking.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                            Is my payment information secure?
+                        </button>
+                    </h2>
+                    <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, we use advanced encryption to protect all transactions.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                            What if my recharge fails?
+                        </button>
+                    </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            In case of failure, the amount is refunded within 24 hours. Contact support if needed.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq5">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                            How can I contact customer support?
+                        </button>
+                    </h2>
+                    <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can reach us via live chat, email, or phone support available 24/7.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr />
+
+    <!-- Partners Section -->
+    <section class="partners text-center">
+        <div class="container">
+            <h2>Our Trusted Partners</h2>
+            <p>We collaborate with the best in the industry to provide seamless and secure services.</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Bank_Mega_2013.svg" alt="Partner 1" class="partner-logo">
+                </div>
+                <div class="col-md-3">
+                    <img src="https://media.istockphoto.com/id/1382305677/vector/finance-logo-vector-illustration-in-trendy.jpg?s=612x612&w=0&k=20&c=37WbXhqdKzvIq7kmltVoGZaBHcUE_Mhll23cyQpgij8=" alt="Partner 2" style="width:100px; border-radius:20px" class="partner-logo">
+                </div>
+                <div class="col-md-3">
+                    <img src="https://companieslogo.com/img/orig/CANBK.NS-94324ae3.png?t=1720244491" style="width:120px;" alt="Partner 3" class="partner-logo">
+                </div>
+                <div class="col-md-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRku_yN8kPjONbw8AeihNt0ViaK7mhYQ4NLPdDKCqb5E8R-GqQ1ke0RUNpVUBNTAONhv2o&usqp=CAU" alt="Partner 4" style="width:100px; border-radius:20px" class="partner-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr />
+    <!-- News Section -->
+    <section class="news text-center">
+        <div class="container">
+            <h2>Latest News</h2>
+            <p>Stay updated with our latest announcements and industry insights.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="https://ghost.org/changelog/content/images/size/w960/2024/06/Additional-Payment-Methods.png" alt="News 1" class="news-img">
+                        <h4>New Payment Method Added</h4>
+                        <p>We have introduced additional payment options for faster transactions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhK6VuA6kx9DvY8Koxgo0i7pZQFwUu2qME9TlFV2PoNowLirfWtfk8SfpIhCfGtm7T-ISd6WyZJrYhQuDwz1mT_-QA6m9IEDGRzQf8qnioGNi9sEvttsvZ1GPlY7JOIctu632OJtO-7xakZpv5bSPG-OvMi6bI0kOwYPfcW6m1RywPekmaHuScSK5c_=s728-rw-e365" alt="News 2" class="news-img">
+                        <h4>Security Upgrade</h4>
+                        <p>Our system now includes advanced encryption to keep your data even safer.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="https://img.freepik.com/premium-vector/realistic-24-hours-7-days-customer-service-icon-3d-style-vector-illustration_174222-11.jpg?semt=ais_hybrid" alt="News 3" class="news-img">
+                        <h4>24/7 Customer Support</h4>
+                        <p>We've expanded our support team to assist you anytime, anywhere.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr />
+    <!-- Blog Section -->
+    <section class="blog text-center">
+        <div class="container">
+            <h2>Our Blog</h2>
+            <p>Explore expert insights, security tips, and the latest trends in mobile recharge technology.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="blog-card">
+                        <img src="https://cdn.dribbble.com/userupload/18818265/file/original-745bdc2e98a540c249a410c8969c6219.png?resize=752x&vertical=center" alt="Blog 1" class="blog-img">
+                        <h4>Top 5 Mobile Recharge Trends in 2025</h4>
+                        <p>
+                            From AI-powered top-ups to instant global payments, the mobile recharge industry is evolving rapidly.
+                            Discover the innovations that are transforming digital payments and making transactions faster and more seamless.
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="blog-card">
+                        <img src="https://static.vecteezy.com/system/resources/previews/006/796/074/non_2x/credit-card-online-payment-with-fingerprint-scanning-secure-transaction-on-smart-phone-financial-security-in-digital-online-and-global-network-connecting-cyber-security-technology-vector.jpg" alt="Blog 2" class="blog-img">
+                        <h4>How to Keep Your Online Transactions Secure</h4>
+                        <p>
+                            With the rise of online transactions, security threats are more sophisticated than ever.
+                            Learn the best practices, from two-factor authentication to end-to-end encryption, to keep your payments safe and secure.
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="blog-card">
+                        <img src="https://www.010innovations.com/wp-content/uploads/2020/01/24x7-support.png" alt="Blog 3" class="blog-img">
+                        <h4>Why 24/7 Support is Essential for Online Services</h4>
+                        <p>
+                            Customer support plays a crucial role in digital services. 24/7 availability builds trust, reduces complaints, and improves user satisfaction. Instant assistance ensures users get help when they need it most, enhancing overall experience.
+
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr />
+
+
+    <!-- Contact Section -->
+    <section class="contact text-center" id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Have questions? Reach out to us anytime.</p>
+            <div class="row justify-content-center m-5">
+                <div class="col-md-8">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-user"></i> Your Name</label>
+                                <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject"><i class="fas fa-heading"></i> Subject</label>
+                                <input type="text" id="subject" class="form-control" placeholder="Enter subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
+                                <textarea id="message" class="form-control" rows="5" placeholder="Write your message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
